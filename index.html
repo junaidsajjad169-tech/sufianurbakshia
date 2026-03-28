@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sufia Nurbakhshia — Community Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #b8963e;
+    --gold-light: #e8d09a;
+    --gold-dark: #7a6128;
+    --ink: #1a1410;
+    --ink-soft: #3d3025;
+    --parchment: #f9f4eb;
+    --parchment-dark: #ede4d0;
+    --deep: #2c1f0e;
+    --muted: #7a6a55;
+    --white: #ffffff;
+    --success: #2d6a4f;
+    --radius: 12px;
+    --shadow: 0 4px 32px rgba(26,20,16,0.13);
+  }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--deep);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--gold-dark);
+  }
+
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .nav-links button {
+    background: none;
+    border: none;
+    color: var(--parchment-dark);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links button:hover, .nav-links button.active {
+    background: rgba(184,150,62,0.18);
+    color: var(--gold-light);
+  }
+
+  /* PAGES */
+  .page { display: none; animation: fadeIn 0.4s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, var(--deep) 0%, #3d2a10 60%, var(--deep) 100%);
+    color: var(--parchment);
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(184,150,62,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-arabic {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-style: italic;
+    letter-spacing: 0.06em;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: rgba(249,244,235,0.72);
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 0.7rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--deep);
+  }
+
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gold-light);
+    border: 1.5px solid var(--gold-dark);
+  }
+
+  .btn-outline:hover { background: rgba(184,150,62,0.15); }
+
+  /* PILLARS */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pillar-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--gold);
+  }
+
+  .pillar-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* DIVIDER */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    padding: 1rem 0;
+    opacity: 0.7;
+  }
+
+  /* COMMUNITY */
+  .community-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) { .community-grid { grid-template-columns: 1fr; } }
+
+  .msg-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(26,20,16,0.07);
+  }
+
+  .msg-card .author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--deep);
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .msg-card .name { font-weight: 600; font-size: 0.9rem; }
+  .msg-card .date { font-size: 0.75rem; color: var(--muted); }
+  .msg-card .body { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.65; }
+
+  /* FORM */
+  .form-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+  }
+
+  .form-row { margin-bottom: 1.25rem; }
+  .form-row label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--parchment-dark);
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.9rem;
+    background: var(--parchment);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+    border-color: var(--gold);
+    background: var(--white);
+  }
+
+  .form-row textarea { resize: vertical; min-height: 90px; }
+
+  /* AI GENERATOR */
+  .gen-panel {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .gen-header {
+    background: var(--deep);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 2px solid var(--gold-dark);
+  }
+
+  .gen-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .gen-header span { font-size: 1.2rem; }
+
+  .gen-body { padding: 1.75rem; }
+
+  .gen-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 540px) { .gen-controls { grid-template-columns: 1fr; } }
+
+  .gen-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .gen-btn:hover { background: var(--gold-light); }
+  .gen-btn:disabled { background: var(--parchment-dark); color: var(--muted); cursor: not-allowed; }
+
+  .gen-output {
+    display: none;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: var(--parchment);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 10px;
+    border-left: 4px solid var(--gold);
+  }
+
+  .gen-output.visible { display: block; animation: fadeIn 0.4s ease; }
+
+  .gen-output h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.75rem;
+  }
+
+  .gen-output .content-text {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+  }
+
+  .copy-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1.1rem;
+    background: transparent;
+    border: 1.5px solid var(--gold-dark);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--gold-dark);
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { background: var(--gold-dark); color: var(--white); }
+
+  .spinner {
+    display: none;
+    width: 20px; height: 20px;
+    border: 2px solid var(--parchment-dark);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 1rem auto;
+  }
+
+  .spinner.visible { display: block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ABOUT */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) { .about-layout { grid-template-columns: 1fr; } }
+
+  .about-emblem {
+    background: var(--deep);
+    border-radius: 50%;
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border: 3px solid var(--gold-dark);
+    box-shadow: 0 0 0 8px rgba(184,150,62,0.12);
+  }
+
+  .about-emblem .arabic-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .about-emblem small {
+    color: var(--parchment-dark);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .about-text p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .quote-block {
+    border-left: 3px solid var(--gold);
+    padding: 0.75rem 1.25rem;
+    background: var(--parchment-dark);
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  /* ALERTS */
+  .alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .alert.success { background: #d4f1e4; color: #1a4a32; display: block; }
+  .alert.error { background: #fde8e8; color: #7a2020; display: block; }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    color: rgba(249,244,235,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    border-top: 2px solid var(--gold-dark);
+    margin-top: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+
+  /* CHAIN OF TRANSMISSION */
+  .chain-node {
+    position: relative;
+    padding: 0 0 2rem 1.5rem;
+    border-bottom: 1px dashed var(--parchment-dark);
+    margin-bottom: 1.5rem;
+  }
+  .chain-node::before {
+    content: '';
+    position: absolute;
+    left: -1.6rem;
+    top: 0.3rem;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--parchment);
+    box-shadow: 0 0 0 2px var(--gold-dark);
+  }
+  .chain-rank {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+  .chain-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+  }
+  .chain-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* BOOKS */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .book-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border-left: 4px solid var(--gold);
+  }
+  .book-icon { font-size: 2rem; flex-shrink: 0; }
+  .book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 0.2rem;
+  }
+  .book-author {
+    font-size: 0.78rem;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .book-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+  .book-tag {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: var(--parchment-dark);
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  /* MEDIA TABS */
+  .media-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--parchment-dark);
+    padding-bottom: 0;
+  }
+  .media-tab {
+    background: none;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    border-radius: 6px 6px 0 0;
+  }
+  .media-tab:hover { color: var(--ink-soft); }
+  .media-tab.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .media-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    box-shadow: 0 2px 12px rgba(26,20,16,0.07);
+  }
+  .media-type-badge {
+    display: inline-block;
+    padding: 0.18rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .article-badge { background: #e8f4fd; color: #185fa5; }
+  .video-badge { background: #fde8e8; color: #7a2020; }
+  .audio-badge { background: #e8f5ee; color: #1a5c35; }
+
+  .media-thumb {
+    width: 100%; height: 80px;
+    background: var(--deep);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .audio-thumb { background: #1a3a27; }
+
+  .media-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 0.25rem;
+    line-height: 1.35;
+  }
+  .media-meta {
+    font-size: 0.75rem;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .media-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  footer .footer-gold {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Sufia Nurbakhshia</div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home', this)">Home</button>
+    <button onclick="showPage('introduction', this)">Introduction</button>
+    <button onclick="showPage('chain', this)">Chain of Transmission</button>
+    <button onclick="showPage('books', this)">Major Books</button>
+    <button onclick="showPage('media', this)">Articles &amp; Media</button>
+    <button onclick="showPage('content', this)">Content Creator</button>
+    <button onclick="showPage('community', this)">Community</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-arabic">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْم</div>
+    <h1>Sufia Nurbakhshia</h1>
+    <p>A spiritual community dedicated to preserving and spreading the sacred teachings of the Sufia Nurbakhshia tradition — illuminating hearts and minds across the world.</p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="showPage('content', document.querySelectorAll('.nav-links button')[5])">Create Content</button>
+      <button class="btn btn-outline" onclick="showPage('community', document.querySelectorAll('.nav-links button')[6])">Join Community</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Five Pillars of Faith</div>
+    <div class="section-sub">The essential articles of Islamic belief at the heart of the Nurbakhshia path</div>
+    <div class="pillars">
+      <div class="pillar-card">
+        <div class="pillar-icon">☝️</div>
+        <h3>Belief in Allah</h3>
+        <p>Unwavering faith in the oneness of Allah (Tawhid) — the supreme foundation of all existence, knowledge, and the beginning of the spiritual path.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🌟</div>
+        <h3>Belief in Angels</h3>
+        <p>Faith in the angels as honoured servants of Allah, created from light, who carry out His commands and stand as witnesses to creation.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">📖</div>
+        <h3>Belief in Books</h3>
+        <p>Faith in the divine scriptures revealed by Allah, including the Quran — the eternal word of God and the supreme guide for all seekers.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🕌</div>
+        <h3>Belief in Prophets</h3>
+        <p>Faith in all the Prophets and Messengers sent by Allah, from Adam to the Seal of Prophets, Muhammad ﷺ, as bearers of divine guidance.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">⚖️</div>
+        <h3>Belief in Hereafter</h3>
+        <p>Faith in the Day of Resurrection, divine judgement, and the life to come — the ultimate return to Allah and the fulfilment of all promises.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <div class="section" style="padding-top: 1rem;">
+    <div class="section-title">Spread the Message</div>
+    <div class="section-sub">Use our AI-powered tools to create articles, posts, and books about the Nurbakhshia tradition</div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <button class="btn btn-primary" onclick="showPage('content', document.querySelectorAll('.nav-links button')[5])">Open Content Creator →</button>
+      <button class="btn btn-outline" onclick="showPage('community', document.querySelectorAll('.nav-links button')[6])">Share a Message →</button>
+    </div>
+  </div>
+</div>
+
+<!-- INTRODUCTION -->
+<div id="page-introduction" class="page">
+  <div class="section">
+    <div class="about-layout">
+      <div>
+        <div class="about-emblem">
+          <div class="arabic-big">نور</div>
+          <small>Nur — Light</small>
+        </div>
+      </div>
+      <div class="about-text">
+        <h2>Sufia Nurbakhshia: A Path of Unity</h2>
+        <p>The Sufia Nurbakhshia is a distinct Islamic school of thought and a staunch advocate for inter-Islamic unity. Its foundation rests upon faith in Allah, His Angels, the Holy Quran and other divine scriptures, the Prophets and Messengers, and the Day of Judgment — as per the Quran, without any addition or omission.</p>
+        <p>Practically, it is based on the pillars of Islam: the Declaration of Faith (Kalima), the five daily prayers, fasting during Ramadan, Zakat, and the Pilgrimage (Hajj) to the House of Allah.</p>
+        <div class="quote-block">Regarding secondary matters (Furu-e-Deen), the school follows the book <em>Fiqh al-Ahwat</em> by Hazrat Shah Syed Muhammad Nurbakhsh (RA). In matters of fundamental principles (Usool), it adheres to his work <em>Kitab al-Itiqadiyyah</em> (Usool-e-I'tiqadiya), and for spiritual practices and litanies, it follows <em>Da'wat-e-Sufia</em>, attributed to Shah-e-Hamdan Mir Syed Ali Hamdani (RA).</div>
+        <p>As followers of Sufism, we hold Hazrat Mir Syed Muhammad Nurbakhsh (A.R.) in the same high regard as other schools hold Imam Abu Hanifa, Imam Malik, or Imam Shafi'i.</p>
+      </div>
+    </div>
+
+    <div class="ornament" style="margin: 2rem 0;">✦ ✦ ✦</div>
+
+    <div class="section-title" style="font-size: 1.6rem; margin-bottom: 0.4rem;">A Bridge Between Traditions</div>
+    <div class="section-sub" style="margin-bottom: 2rem;">What distinguishes this path is that it represents a middle way between the Sunni and Shia traditions — a standard-bearer for Muslim unity, offering a framework through which we can become one Ummah.</div>
+
+    <div class="pillars" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-bottom: 2.5rem;">
+      <div class="pillar-card">
+        <div class="pillar-icon">🤲</div>
+        <h3>Prayer</h3>
+        <p>According to <em>Fiqh al-Ahwat</em>, prayers may be performed with open arms (Sabal) or by folding them (Takattuf), accommodating both traditions.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">💧</div>
+        <h3>Ablution (Wudu)</h3>
+        <p>One may perform Masah (wiping) over the feet or wash them if necessary — a flexibility that bridges different schools of practice.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">👑</div>
+        <h3>Leadership</h3>
+        <p>We acknowledge both the Twelve Imams and the Rashidun Caliphs, honouring the full breadth of Islamic leadership.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🌿</div>
+        <h3>Succession</h3>
+        <p>For spiritual caliphate (Khilafat-e-Batini), we accept Hazrat Ali (KAW) as the first Imam; for temporal caliphate (Khilafat-e-Zahiri), Hazrat Abu Bakr Siddiq (RA) as the first Caliph.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🕌</div>
+        <h3>Spiritual Retreat (I'tikaf)</h3>
+        <p>Practiced in our mosques and Khanqahs even outside Ramadan, with strict discipline — no bedding is brought in and unnecessary contact with the outside world is avoided.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">🌙</div>
+        <h3>Commemoration of Muharram</h3>
+        <p>Gatherings (Majalis) are held in mosques as worship, focusing on the philosophy of Imam Hussain's (AS) martyrdom. Self-flagellation, street processions, or chains are not part of our path.</p>
+      </div>
+    </div>
+
+    <div class="ornament" style="margin: 2rem 0;">✦ ✦ ✦</div>
+
+    <div class="section-title" style="font-size: 1.6rem; margin-bottom: 0.4rem;">The Essence of the Path</div>
+    <div class="section-sub" style="margin-bottom: 1.5rem;">Rooted in Islamic Sufism (Tasawwuf)</div>
+    <div class="about-text">
+      <p>Our traditions are rooted in Islamic Sufism (Tasawwuf). The objective is spiritual development through a disciplined system of Murshid and Murid (Master and Disciple). The current Murshid is <strong>Mawlana Rustam Ali Anjum</strong>. This training aims for spiritual elevation, seeking proximity to God, and serving others.</p>
+      <p>These unique characteristics distinguish the Sufia Nurbakhshia as a prominent and refined path — a living bridge of unity within the greater family of Islam.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAIN OF TRANSMISSION -->
+<div id="page-chain" class="page">
+  <div class="section">
+    <div class="section-title">Chain of Transmission</div>
+    <div class="section-sub">The blessed silsila — the unbroken spiritual chain from the Prophet ﷺ to the present day</div>
+
+    <div class="quote-block" style="margin-bottom: 2rem;">"A silsila without a living master is like a river without water — the chain must be alive to transmit the light."</div>
+
+    <div style="position: relative; padding-left: 2rem; border-left: 3px solid var(--gold);">
+
+      <div class="chain-node">
+        <div class="chain-rank">The Seal of Prophethood</div>
+        <div class="chain-name">Sayyiduna Muhammad al-Mustafa ﷺ</div>
+        <div class="chain-desc">The source of all spiritual knowledge and the axis of the silsila. All Sufi chains trace back to the Prophet ﷺ through Imam Ali (AS).</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">Gate of Knowledge</div>
+        <div class="chain-name">Imam Ali ibn Abi Talib (AS)</div>
+        <div class="chain-desc">The Commander of the Faithful and the first Imam — the direct inheritor of the esoteric sciences from the Prophet ﷺ.</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">Kubrawi Foundation</div>
+        <div class="chain-name">Shaykh Najm al-Din Kubra (1145–1221)</div>
+        <div class="chain-desc">Founder of the Kubrawiyya order and spiritual progenitor of the Nurbakhshia lineage. Known as "the sculptor of souls."</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">The Guiding Pole</div>
+        <div class="chain-name">Shah Ni'matullah Wali (1330–1431)</div>
+        <div class="chain-desc">The great master who bestowed the title "Nurbakhsh" upon his foremost disciple, recognizing his station as the light-giver of the age.</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">Founder of the Order</div>
+        <div class="chain-name">Syed Muhammad Nurbakhsh (1392–1464)</div>
+        <div class="chain-desc">Author of the Risala-e-Sufiyya and numerous spiritual works. He established the Nurbakhshia order and codified its teachings on love, gnosis, and the path to Allah.</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">Consolidator of the Tradition</div>
+        <div class="chain-name">Syed Qasim Fayzabakhsh (d. 1515)</div>
+        <div class="chain-desc">Son and successor of Nurbakhsh, who preserved and spread the order's teachings across Persia and the broader Islamic world.</div>
+      </div>
+
+      <div class="chain-node">
+        <div class="chain-rank">Propagator in Baltistan</div>
+        <div class="chain-name">Mir Shamsuddin Iraqi (d. 1526)</div>
+        <div class="chain-desc">The great missionary who brought the Nurbakhshia tradition to Baltistan, Kashmir, and the Subcontinent, transforming the spiritual landscape of the region.</div>
+      </div>
+
+      <div class="chain-node" style="border-bottom: none; padding-bottom: 0;">
+        <div class="chain-rank">The Living Masters</div>
+        <div class="chain-name">Contemporary Silsila — Present Day</div>
+        <div class="chain-desc">The chain continues unbroken to this day. The living masters of the Nurbakhshia tradition guide seekers on the path, preserving the esoteric and exoteric sciences of Islam.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAJOR BOOKS -->
+<div id="page-books" class="page">
+  <div class="section">
+    <div class="section-title">Major Books</div>
+    <div class="section-sub">The foundational texts of Sufia Nurbakhshia — treasures of spiritual knowledge</div>
+
+    <div class="books-grid">
+
+      <div class="book-card">
+        <div class="book-icon">📗</div>
+        <div class="book-info">
+          <div class="book-title">Kitab al-Itiqadiyyah (Usool-e-I'tiqadiya)</div>
+          <div class="book-author">Syed Muhammad Nurbakhsh</div>
+          <div class="book-desc">The foundational treatise on the principles of Islamic tenets (Usool) within the Nurbakhshia order. It outlines the essential articles of faith and the theological foundations upon which the school is built.</div>
+          <div class="book-tag">Doctrine &amp; Principles</div>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-icon">📘</div>
+        <div class="book-info">
+          <div class="book-title">Da'wat-e-Sufia</div>
+          <div class="book-author">Shah-e-Hamdan Mir Syed Ali Hamdani (RA)</div>
+          <div class="book-desc">The guiding text for spiritual practices and litanies within the Nurbakhshia order. Attributed to the great master Shah-e-Hamdan, it forms the basis of devotional and contemplative practice for followers of the path.</div>
+          <div class="book-tag">Spiritual Practice</div>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-icon">📙</div>
+        <div class="book-info">
+          <div class="book-title">Diwan-e-Nurbakhsh</div>
+          <div class="book-author">Syed Muhammad Nurbakhsh</div>
+          <div class="book-desc">A collection of devotional poetry expressing the depths of divine love, longing, and spiritual intoxication. One of the great works of Persian Sufi poetry.</div>
+          <div class="book-tag">Poetry &amp; Literature</div>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-icon">📕</div>
+        <div class="book-info">
+          <div class="book-title">Fiqh-e-Ahwat</div>
+          <div class="book-author">Syed Muhammad Nurbakhsh</div>
+          <div class="book-desc">A jurisprudential text outlining the religious law as understood and practiced within the Nurbakhshia tradition — integrating the outer observance of Sharia with the inner path of Tariqa.</div>
+          <div class="book-tag">Islamic Law</div>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-icon">📓</div>
+        <div class="book-info">
+          <div class="book-title">Risala Nuriyyah</div>
+          <div class="book-author">Syed Muhammad Nurbakhsh</div>
+          <div class="book-desc">The Treatise of Light — a guide to the stages of spiritual realization and the inner meaning of Islamic practice for those who have entered the Sufi way.</div>
+          <div class="book-tag">Gnosis &amp; Mysticism</div>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <div class="book-icon">📒</div>
+        <div class="book-info">
+          <div class="book-title">Silsila-nama</div>
+          <div class="book-author">Various Masters</div>
+          <div class="book-desc">Historical records documenting the chain of transmission of the Nurbakhshia order, preserving the names, biographies, and spiritual stations of the masters across generations.</div>
+          <div class="book-tag">History &amp; Biography</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLES & MEDIA -->
+<div id="page-media" class="page">
+  <div class="section">
+    <div class="section-title">Articles &amp; Media</div>
+    <div class="section-sub">Written articles, videos, and audio content spreading the message of Sufia Nurbakhshia</div>
+
+    <!-- TABS -->
+    <div class="media-tabs">
+      <button class="media-tab active" onclick="switchTab('articles', this)">Articles</button>
+      <button class="media-tab" onclick="switchTab('videos', this)">Videos</button>
+      <button class="media-tab" onclick="switchTab('audiobooks', this)">Audio Books</button>
+    </div>
+
+    <!-- ARTICLES -->
+    <div id="tab-articles" class="tab-panel active">
+      <div class="media-grid">
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">Mir Syed Muhammad Nurbakhsh Qahistani</div>
+          <div class="media-meta">Biography &amp; Scholarship · By Sajjad Hussain Balghari</div>
+          <div class="media-desc">A scholarly biographical study of Hazrat Mir Syed Muhammad Nurbakhsh Qahistani (A.R.) — exploring his life, spiritual station, major works, and enduring legacy as the founder of the Nurbakhshia order and a towering figure in Islamic Sufism.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">Maslak-e-Tahqeeq (The School of Higher Research)</div>
+          <div class="media-meta">Research &amp; Scholarship · By Prof. Dr. Zakir Hussain Zakir</div>
+          <div class="media-desc">A rigorous academic study of the Nurbakhshia school as a distinct intellectual and spiritual tradition. Prof. Dr. Zakir Hussain Zakir examines its methodology, doctrinal foundations, and its unique position as a bridge between Sunni and Shia traditions within Islamic thought.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">The Stations of the Heart in Nurbakhshia Sufism</div>
+          <div class="media-meta">Spiritual Doctrine · 12 min read</div>
+          <div class="media-desc">An exploration of the maqamat (stations) and ahwal (states) as described in the Kitab al-Itiqadiyyah, and how the seeker progresses through them under the guidance of a living master.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">Divine Love in the Poetry of Nurbakhsh</div>
+          <div class="media-meta">Poetry &amp; Literature · 8 min read</div>
+          <div class="media-desc">A literary and spiritual analysis of the Diwan-e-Nurbakhsh, exploring how the master used the language of earthly love to express transcendent realities of the soul's journey to Allah.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">Mir Shamsuddin Iraqi and the Spread of Nurbakhshia in Baltistan</div>
+          <div class="media-meta">History · 15 min read</div>
+          <div class="media-desc">A historical account of how the great missionary Mir Shamsuddin Iraqi carried the Nurbakhshia torch to Baltistan and Kashmir, transforming the religious character of the region in the 16th century.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge article-badge">Article</div>
+          <div class="media-title">Understanding Dhikr in the Nurbakhshia Tradition</div>
+          <div class="media-meta">Practice &amp; Ritual · 10 min read</div>
+          <div class="media-desc">A practical and theoretical guide to the remembrance of Allah as taught and practiced in the Nurbakhshia order — its forms, its inner meaning, and its transformative power on the soul.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div id="tab-videos" class="tab-panel">
+      <div class="media-grid">
+        <div class="media-card">
+          <div class="media-type-badge video-badge">Video</div>
+          <div class="media-thumb">▶</div>
+          <div class="media-title">Introduction to the Nurbakhshia Silsila</div>
+          <div class="media-meta">Documentary · 42 min</div>
+          <div class="media-desc">A visual journey through the history, teachings, and living presence of the Sufia Nurbakhshia tradition — from its origins in 15th century Persia to the present day.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge video-badge">Video</div>
+          <div class="media-thumb">▶</div>
+          <div class="media-title">Lecture: The Meaning of Fana (Annihilation in Allah)</div>
+          <div class="media-meta">Lecture · 28 min</div>
+          <div class="media-desc">A scholarly lecture on the Sufi concept of fana — the annihilation of the ego-self in divine reality — as understood and experienced within the Nurbakhshia path.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge video-badge">Video</div>
+          <div class="media-thumb">▶</div>
+          <div class="media-title">Recitation of Nurbakhshia Prayers &amp; Litanies</div>
+          <div class="media-meta">Devotional · 55 min</div>
+          <div class="media-desc">A complete audio-visual recitation of the traditional prayers, awrad, and litanies of the Nurbakhshia tradition, with translation and commentary.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge video-badge">Video</div>
+          <div class="media-thumb">▶</div>
+          <div class="media-title">Baltistan — Land of the Nurbakhshia Heritage</div>
+          <div class="media-meta">Documentary · 36 min</div>
+          <div class="media-desc">A documentary exploring the sacred sites, shrines, and living community of the Nurbakhshia tradition in the Baltistan region of Pakistan — a heartland of this spiritual order.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUDIO BOOKS -->
+    <div id="tab-audiobooks" class="tab-panel">
+      <div class="media-grid">
+        <div class="media-card">
+          <div class="media-type-badge audio-badge">Audio Book</div>
+          <div class="media-thumb audio-thumb">🎧</div>
+          <div class="media-title">Kitab al-Itiqadiyyah — Full Audio Reading</div>
+          <div class="media-meta">Classical Text · 3 hr 20 min</div>
+          <div class="media-desc">A complete audio reading of the foundational text on Islamic tenets of the Nurbakhshia order, the Kitab al-Itiqadiyyah, with chapter introductions and scholarly commentary between sections.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge audio-badge">Audio Book</div>
+          <div class="media-thumb audio-thumb">🎧</div>
+          <div class="media-title">Diwan-e-Nurbakhsh — Sung Poetry Collection</div>
+          <div class="media-meta">Poetry · 1 hr 45 min</div>
+          <div class="media-desc">The devotional poetry of Syed Muhammad Nurbakhsh recited in the classical Persian tradition, with Urdu and English translations read after each poem.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge audio-badge">Audio Book</div>
+          <div class="media-thumb audio-thumb">🎧</div>
+          <div class="media-title">Lives of the Nurbakhshia Masters</div>
+          <div class="media-meta">Biography · 2 hr 10 min</div>
+          <div class="media-desc">Audio biographies of the great masters of the Nurbakhshia chain — from Nurbakhsh himself through Mir Shamsuddin Iraqi and beyond — narrated with reverence and scholarly detail.</div>
+        </div>
+        <div class="media-card">
+          <div class="media-type-badge audio-badge">Audio Book</div>
+          <div class="media-thumb audio-thumb">🎧</div>
+          <div class="media-title">The Treatise of Light — Risala Nuriyyah</div>
+          <div class="media-meta">Spiritual Guidance · 2 hr 55 min</div>
+          <div class="media-desc">A narrated reading of Risala Nuriyyah with commentary, guiding the listener through the stages of spiritual wayfaring as outlined by the founder of the order.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTENT CREATOR -->
+<div id="page-content" class="page">
+  <div class="section">
+    <div class="section-title">AI Content Creator</div>
+    <div class="section-sub">Generate articles, blog posts, and written content to spread the message of Nurbakhshia</div>
+
+    <div class="gen-panel">
+      <div class="gen-header">
+        <span>✨</span>
+        <h3>Powered by Claude AI</h3>
+      </div>
+      <div class="gen-body">
+        <div class="gen-controls">
+          <div class="form-row" style="margin: 0;">
+            <label>Content Type</label>
+            <select id="contentType">
+              <option value="blog post">Blog Post / Article</option>
+              <option value="social media post">Social Media Post</option>
+              <option value="email newsletter">Email Newsletter</option>
+              <option value="book chapter introduction">Book Chapter</option>
+              <option value="speech or sermon outline">Speech / Sermon Outline</option>
+            </select>
+          </div>
+          <div class="form-row" style="margin: 0;">
+            <label>Tone</label>
+            <select id="tone">
+              <option value="scholarly and reverent">Scholarly & Reverent</option>
+              <option value="warm and accessible">Warm & Accessible</option>
+              <option value="poetic and spiritual">Poetic & Spiritual</option>
+              <option value="educational and informative">Educational</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Topic or Theme</label>
+          <input type="text" id="topic" placeholder="e.g. The meaning of dhikr, Nurbakhsh's teachings on love, The importance of the silsila..." />
+        </div>
+
+        <div class="form-row">
+          <label>Additional Details (optional)</label>
+          <textarea id="details" placeholder="Any specific points to include, target audience, references, or context..."></textarea>
+        </div>
+
+        <button class="gen-btn" id="generateBtn" onclick="generateContent()">Generate Content</button>
+
+        <div class="spinner" id="spinner"></div>
+        <div id="alertBox" class="alert"></div>
+
+        <div class="gen-output" id="genOutput">
+          <h4 id="outputTitle">Generated Content</h4>
+          <div class="content-text" id="outputText"></div>
+          <button class="copy-btn" onclick="copyContent()">Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY -->
+<div id="page-community" class="page">
+  <div class="section">
+    <div class="section-title">Community Voice</div>
+    <div class="section-sub">Share reflections, messages, and connect with fellow seekers</div>
+
+    <div class="community-grid">
+      <div class="msg-card">
+        <div class="author">
+          <div class="avatar">AH</div>
+          <div>
+            <div class="name">Ahmad Hussain</div>
+            <div class="date">March 2025</div>
+          </div>
+        </div>
+        <div class="body">The teachings of Nurbakhsh on the nature of the heart have transformed my understanding of dhikr. May this platform spread the light to every corner of the world.</div>
+      </div>
+      <div class="msg-card">
+        <div class="author">
+          <div class="avatar">ZF</div>
+          <div>
+            <div class="name">Zainab Fatima</div>
+            <div class="date">February 2025</div>
+          </div>
+        </div>
+        <div class="body">Al-Hamdulillah for this community. The silsila connects us across continents — may the Nurbakhshia tradition continue to illuminate hearts everywhere.</div>
+      </div>
+      <div class="msg-card">
+        <div class="author">
+          <div class="avatar">MK</div>
+          <div>
+            <div class="name">Muhammad Karim</div>
+            <div class="date">January 2025</div>
+          </div>
+        </div>
+        <div class="body">Studying the works of the masters in the Nurbakhshia lineage has given me a deeper appreciation of Islamic mysticism. Grateful for resources like this.</div>
+      </div>
+      <div class="msg-card">
+        <div class="author">
+          <div class="avatar">SB</div>
+          <div>
+            <div class="name">Sajida Bano</div>
+            <div class="date">December 2024</div>
+          </div>
+        </div>
+        <div class="body">The path of love and light — the Nurbakhshia way — is a gift to all of humanity. Let us share it with wisdom, humility, and sincerity.</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="section-title" style="font-size: 1.4rem; margin-bottom: 0.25rem;">Share Your Message</div>
+      <div class="section-sub" style="margin-bottom: 1.5rem;">Leave a reflection, question, or message for the community</div>
+
+      <div id="formAlert" class="alert"></div>
+
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" id="commName" placeholder="Your name or kunya"/>
+      </div>
+      <div class="form-row">
+        <label>Email (optional)</label>
+        <input type="email" id="commEmail" placeholder="your@email.com"/>
+      </div>
+      <div class="form-row">
+        <label>Location</label>
+        <input type="text" id="commLocation" placeholder="City, Country"/>
+      </div>
+      <div class="form-row">
+        <label>Your Message</label>
+        <textarea id="commMessage" rows="4" placeholder="Share a reflection, question, or message of peace..."></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="submitMessage()" style="width: 100%; padding: 0.85rem;">Submit Message</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-gold">Sufia Nurbakhshia</span>
+  Spreading the light of Islamic spirituality — for seekers everywhere
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.media-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+async function generateContent() {
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) {
+    showAlert('alertBox', 'Please enter a topic or theme.', 'error');
+    return;
+  }
+
+  const type = document.getElementById('contentType').value;
+  const tone = document.getElementById('tone').value;
+  const details = document.getElementById('details').value.trim();
+
+  const btn = document.getElementById('generateBtn');
+  const spinner = document.getElementById('spinner');
+  const output = document.getElementById('genOutput');
+
+  btn.disabled = true;
+  spinner.classList.add('visible');
+  output.classList.remove('visible');
+  document.getElementById('alertBox').className = 'alert';
+
+  const prompt = `You are a knowledgeable and reverent writer specializing in the Nurbakhshia Sufi tradition of Islam. 
+Write a ${type} in a ${tone} style about the following topic: "${topic}".
+
+${details ? `Additional context: ${details}` : ''}
+
+The content should:
+- Be grounded in authentic Islamic spirituality and the Nurbakhshia tradition
+- Reference the silsila (spiritual chain), the teachings of Syed Muhammad Nurbakhsh, or relevant Sufi concepts where appropriate
+- Be respectful, accurate, and uplifting
+- Be suitable for sharing with both practicing Muslims and those curious about Sufi Islam
+
+Write the full ${type} now, ready to publish.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    const text = data.content?.map(c => c.text || '').join('') || '';
+
+    if (!text) throw new Error('No content returned');
+
+    document.getElementById('outputTitle').textContent = type.charAt(0).toUpperCase() + type.slice(1) + ': ' + topic;
+    document.getElementById('outputText').textContent = text;
+    output.classList.add('visible');
+
+  } catch (err) {
+    showAlert('alertBox', 'Could not generate content. Please try again.', 'error');
+  } finally {
+    btn.disabled = false;
+    spinner.classList.remove('visible');
+  }
+}
+
+function copyContent() {
+  const text = document.getElementById('outputText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    showAlert('alertBox', 'Content copied to clipboard!', 'success');
+  });
+}
+
+function submitMessage() {
+  const name = document.getElementById('commName').value.trim();
+  const msg = document.getElementById('commMessage').value.trim();
+  if (!name || !msg) {
+    showAlert('formAlert', 'Please enter your name and a message.', 'error');
+    return;
+  }
+  document.getElementById('commName').value = '';
+  document.getElementById('commEmail').value = '';
+  document.getElementById('commLocation').value = '';
+  document.getElementById('commMessage').value = '';
+  showAlert('formAlert', 'JazakAllah Khair — your message has been received. May your words spread light.', 'success');
+}
+
+function showAlert(id, msg, type) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'alert ' + type;
+  setTimeout(() => { el.className = 'alert'; }, 5000);
+}
+</script>
+</body>
+</html>
